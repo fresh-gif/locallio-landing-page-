@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locallio - Smart and Secure Home Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Just+Me+Again+Down+Here&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+            background: #fafafa;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 15px 0;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 35px;
+            background: url('logo.png') no-repeat center center;
+            background-size: contain;
+            margin-left: 20px;
+        }
+        
+        .nav-container {
+            margin-right: 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 30px;
+            gap: 40px;
+        }
+        
+        .nav a {
+            font-weight: 500;
+            font-size: 16px;
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav a:hover {
+            color: #4a4a4a;
+        }
+        
+        /* Hero section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 150px 0 80px;
+            min-height: 100vh;
+            justify-content: center;
+            background: #fafafa;
+        }
+        
+        .hero-title {
+            font-family: 'Just Me Again Down Here', cursive;
+            font-size: 100px;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            width: 824px;
+            height: 222px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 1366px;
+            height: auto;
+            max-height: 641px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 1s;
+            object-fit: contain;
+        }
+        
+        /* Content sections - Page 2 */
+        .content-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 30px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            background: #fafafa;
+        }
+        
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .image-container, .text-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            max-height: 500px;
+            object-fit: contain;
+            transition: all 0.5s ease;
+        }
+        
+        .text-container h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease 0.3s;
+            max-width: 500px;
+        }
+        
+        .main-heading {
+            font-size: 36px;
+            line-height: 1.3;
+        }
+        
+        .sub-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 18px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease 0.5s;
+            max-width: 500px;
+        }
+        
+        .content-section.visible .text-container h2,
+        .content-section.visible .text-container p,
+        .content-section.visible .sub-heading {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+            max-width: 500px;
+        }
+        
+        .features-list li {
+            margin-bottom: 15px;
+            padding-left: 60px;
+            position: relative;
+            color: #666;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.8s ease;
+            text-align: left;
+        }
+        
+        .content-section.visible .features-list li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .features-list li:nth-child(1) { transition-delay: 0.7s; }
+        .features-list li:nth-child(2) { transition-delay: 0.9s; }
+        
+        .features-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 46px;
+            height: 46px;
+            background: #888;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .features-list li:nth-child(1):before {
+            content: "1";
+        }
+        
+        .features-list li:nth-child(2):before {
+            content: "2";
+        }
+        
+        .feature-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .feature-desc {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .effortless-heading {
+            font-size: 32px;
+            line-height: 1.3;
+            max-width: 500px;
+        }
+        
+        .effortless-desc {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .content-section.visible .stat-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stat-item:nth-child(1) { transition-delay: 0.7s; }
+        .stat-item:nth-child(2) { transition-delay: 0.9s; }
+        .stat-item:nth-child(3) { transition-delay: 1.1s; }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        /* Page 3 - Booking Process Section */
+        .booking-process {
+            padding: 80px 0;
+            min-height: 100vh;
+            background: #fafafa;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .booking-process.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .process-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .process-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #333;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .process-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #666;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+        
+        .process-description {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+        }
+        
+        .booking-process.visible .process-title,
+        .booking-process.visible .process-subtitle,
+        .booking-process.visible .process-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .process-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .process-steps-left, .process-steps-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            min-width: 300px;
+        }
+        
+        .step-left, .step-right {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+            text-align: center;
+        }
+        
+        .step-right {
+            transform: translateX(30px);
+        }
+        
+        .booking-process.visible .step-left,
+        .booking-process.visible .step-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .booking-process.visible .step-left:nth-child(1) { transition-delay: 0.6s; }
+        .booking-process.visible .step-left:nth-child(2) { transition-delay: 0.8s; }
+        .booking-process.visible .step-right:nth-child(1) { transition-delay: 1.0s; }
+        .booking-process.visible .step-right:nth-child(2) { transition-delay: 1.2s; }
+        
+        .step-number {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .step-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .step-description {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .process-phone {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 300px;
+            max-width: 400px;
+        }
+        
+        .phone-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: phoneAppear 1s ease forwards 0.5s;
+            transition: all 0.5s ease;
+            object-fit: contain;
+        }
+        
+        .phone-image:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background: #f5f5f5;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .testimonials.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 40px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .author-info p {
+            color: #888;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        /* App Download Section */
+        .app-download {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0;
+            min-height: 80vh;
+            background: #000;
+            color: white;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .app-download.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .app-download h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            max-width: 600px;
+        }
+        
+        .app-download p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            opacity: 0.9;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            border: 2px solid transparent;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px);
+            background: #000;
+            color: white;
+            border-color: white;
+        }
+        
+        .google-play {
+            background: #000;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .google-play:hover {
+            background: #4285F4;
+            border-color: #4285F4;
+        }
+        
+        .app-store {
+            background: #000;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .app-store:hover {
+            background: #007AFF;
+            border-color: #007AFF;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: #111;
+            color: white;
+            padding: 50px 0 25px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes phoneAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 80px;
+                width: 700px;
+                height: auto;
+            }
+            
+            .hero-image {
+                max-width: 900px;
+                max-height: 500px;
+            }
+            
+            .text-container h2 {
+                font-size: 36px;
+            }
+            
+            .process-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .process-steps-left, .process-steps-right {
+                width: 100%;
+            }
+            
+            .main-heading {
+                font-size: 32px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 60px;
+                width: 100%;
+                height: auto;
+            }
+            
+            .content-section {
+                flex-direction: column;
+                padding: 20px 0;
+                gap: 30px;
+            }
+            
+            .image-container, .text-container {
+                padding: 15px;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .image-container img {
+                max-width: 400px;
+                max-height: 400px;
+            }
+            
+            .nav {
+                padding: 10px 20px;
+                gap: 30px;
+            }
+            
+            header {
+                flex-direction: row;
+                gap: 0;
+                padding: 15px 0;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .app-download {
+                padding: 60px 0;
+            }
+            
+            .app-download h2 {
+                font-size: 32px;
+            }
+            
+            .app-download p {
+                font-size: 16px;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .download-btn {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+            
+            .testimonials h2 {
+                font-size: 36px;
+            }
+            
+            .main-heading {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-image {
+                max-width: 100%;
+                max-height: 300px;
+            }
+            
+            .text-container h2 {
+                font-size: 28px;
+            }
+            
+            .nav {
+                gap: 20px;
+                padding: 8px 15px;
+            }
+            
+            .hero {
+                padding: 130px 0 60px;
+            }
+            
+            .app-download h2 {
+                font-size: 28px;
+            }
+            
+            .app-download p {
+                font-size: 16px;
+            }
+            
+            .main-heading {
+                font-size: 24px;
+            }
+            
+            .image-container img {
+                max-width: 300px;
+                max-height: 300px;
+            }
+            
+            .process-title {
+                font-size: 32px;
+            }
+            
+            .process-subtitle {
+                font-size: 20px;
+            }
+            
+            .phone-image {
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Logo image -->
+        <div class="logo"></div>
+        
+        <!-- Navigation on the right -->
+        <div class="nav-container">
+            <nav class="nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="mailto:support@mylocallio.com">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1 class="hero-title">Your Trusted Partner for Home Service</h1>
+        <img src="hero-new.png" alt="Locallio App Interface" class="hero-image">
+    </section>
+
+    <!-- Services Section -->
+    <section id="about" class="content-section">
+        <div class="image-container">
+            <img src="half-screen.png" alt="Smart and Secure Home Services" class="half-screen-img">
+        </div>
+        <div class="text-container">
+            <h2 class="main-heading">Smart and Secure Home Services</h2>
+            <p class="sub-heading">Book verified home service experts for cleaning, repairs, beauty, Garden and more. All from your phone.</p>
+            
+            <div class="features-list">
+                <li>
+                    <div class="feature-title">Fast & Easy Booking</div>
+                    <div class="feature-desc">Enjoy smooth mobile-first booking with secure payment</div>
+                </li>
+                <li>
+                    <div class="feature-title">Available 24/7</div>
+                    <div class="feature-desc">Whether it's early Morning or Evening, schedule Service when it suits you best.</div>
+                </li>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="services" class="content-section">
+        <div class="text-container">
+            <h2 class="effortless-heading">Effortless Living with Trusted services</h2>
+            <p class="effortless-desc">Our app connects you with skilled professionals for cleaning, repairs, beauty, appliance servicing and many more, whether it's a last-minute fix or a scheduled task. Get services delivered to your doorstep with just a few.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Happy Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Service Providers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="fix.png" alt="Effortless Living with Trusted Services" class="fix-img">
+        </div>
+    </section>
+
+    <!-- Page 3 - Booking Process Section -->
+    <section class="booking-process">
+        <div class="process-header">
+            <h2 class="process-title">From Booking to Payment</h2>
+            <h3 class="process-subtitle">Here's How</h3>
+            <p class="process-description">Easily book trusted service professionals for cleaning, repairs or beauty. Track appointments, Get reminders</p>
+        </div>
+        
+        <div class="process-container">
+            <div class="process-steps-left">
+                <div class="step-left">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Select a Service</h3>
+                    <p class="step-description">Choose from cleaning, repairs, beauty, Ac servicing and more personalised services designed to fit your daily home needs perfectly.</p>
+                </div>
+                
+                <div class="step-left">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Set your Schedule</h3>
+                    <p class="step-description">Select the date and time that suits you best. Enjoy flexible scheduling with daily availability to match your busy lifestyle.</p>
+                </div>
+            </div>
+            
+            <div class="process-phone">
+                <img src="full-screen.png" alt="Locallio App" class="phone-image">
+            </div>
+            
+            <div class="process-steps-right">
+                <div class="step-right">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Get Notified</h3>
+                    <p class="step-description">Get instant updates, live notifications, and helpful reminders- all before your trusted service professional arrives at your doorstep.</p>
+                </div>
+                
+                <div class="step-right">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Pay Securely & Relax</h3>
+                    <p class="step-description">Pay quickly an securely using debit/credit card ensuring smooth, cashless experience every time you book.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        "Locallio has completely transformed how I manage home services. The app is incredibly easy to use and the professionals are always reliable!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SD</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Homeowner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        "As a service provider, Locallio has helped me grow my business significantly. The platform is professional and payments are always on time."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MJ</div>
+                        <div class="author-info">
+                            <h4>Mike Rodriguez</h4>
+                            <p>Cleaning Professional</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        "I've tried many home service apps, but Locallio stands out with its quality of service and customer support. Highly recommended!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ET</div>
+                        <div class="author-info">
+                            <h4>Emily Thompson</h4>
+                            <p>Regular User</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="app-download">
+        <h2>One app for fast, trusted home service booking</h2>
+        <p>Easily book home service professionals for clothing, repairs or beauty. Track appointments, get reminders and make secure payments all in one seamless easy-to-use mobile app.</p>
+        
+        <div class="download-buttons">
+            <a href="https://play.google.com/store" class="download-btn google-play" target="_blank">
+                <i class="fab fa-google-play" style="margin-right: 10px;"></i>
+                Google Play
+            </a>
+            <a href="https://www.apple.com/app-store/" class="download-btn app-store" target="_blank">
+                <i class="fab fa-apple" style="margin-right: 10px;"></i>
+                AppStore
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Locallio</h3>
+                    <p style="color: #ccc; margin-bottom: 20px;">Local help, one tap away</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@mylocallio.com">support@mylocallio.com</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="mailto:support@mylocallio.com">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy-policy">Privacy Policy</a></li>
+                        <li><a href="#terms-conditions">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Locallio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Legal Documentation Sections (Hidden by default) -->
+    <section id="privacy-policy" style="display: none;">
+        <div class="container" style="padding: 100px 20px;">
+            <h2>Privacy Policy</h2>
+            <p>Last updated: January 1, 2023</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect information you provide directly to us, including:</p>
+            <ul>
+                <li>Personal information (name, email, phone number)</li>
+                <li>Service preferences and booking history</li>
+                <li>Payment information</li>
+                <li>Location data</li>
+            </ul>
+            
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the information we collect to:</p>
+            <ul>
+                <li>Provide, maintain, and improve our services</li>
+                <li>Process transactions and send related information</li>
+                <li>Send you technical notices and support messages</li>
+                <li>Respond to your comments and questions</li>
+            </ul>
+            
+            <h3>3. Information Sharing</h3>
+            <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.</p>
+            
+            <h3>4. Data Security</h3>
+            <p>We implement appropriate technical and organizational security measures to protect your personal information.</p>
+            
+            <h3>5. Your Rights</h3>
+            <p>You have the right to access, correct, or delete your personal information. Contact us at support@mylocallio.com to exercise these rights.</p>
+            
+            <h3>6. Changes to This Policy</h3>
+            <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+            
+            <h3>7. Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy, please contact us at support@mylocallio.com.</p>
+        </div>
+    </section>
+    
+    <section id="terms-conditions" style="display: none;">
+        <div class="container" style="padding: 100px 20px;">
+            <h2>Terms and Conditions</h2>
+            <p>Last updated: January 1, 2023</p>
+            
+            <h3>1. Agreement to Terms</h3>
+            <p>By accessing or using Locallio's services, you agree to be bound by these Terms and Conditions.</p>
+            
+            <h3>2. Description of Service</h3>
+            <p>Locallio provides a platform that connects users with service professionals for various home services.</p>
+            
+            <h3>3. User Accounts</h3>
+            <p>You are responsible for maintaining the confidentiality of your account and password.</p>
+            
+            <h3>4. Booking and Payments</h3>
+            <p>All bookings are subject to availability. Payments are processed securely through our payment partners.</p>
+            
+            <h3>5. Cancellation Policy</h3>
+            <p>Cancellations made within 24 hours of the scheduled service may be subject to a cancellation fee.</p>
+            
+            <h3>6. Service Provider Relationship</h3>
+            <p>Locallio acts as a platform to connect users with service providers. We are not responsible for the quality of services provided.</p>
+            
+            <h3>7. Limitation of Liability</h3>
+            <p>Locallio shall not be liable for any indirect, incidental, special, consequential, or punitive damages.</p>
+            
+            <h3>8. Governing Law</h3>
+            <p>These Terms shall be governed by the laws of the jurisdiction in which Locallio operates.</p>
+            
+            <h3>9. Changes to Terms</h3>
+            <p>We reserve the right to modify these terms at any time. We will provide notice of significant changes.</p>
+            
+            <h3>10. Contact Information</h3>
+            <p>For any questions about these Terms, please contact us at support@mylocallio.com.</p>
+        </div>
+    </section>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.content-section, .booking-process, .app-download, .testimonials').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Functional download buttons
+        document.querySelectorAll('.download-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // You can add analytics tracking here
+                console.log('Download button clicked:', this.textContent.trim());
+                // The actual navigation happens via href attribute
+            });
+        });
+
+        // Legal documentation navigation
+        document.querySelectorAll('a[href="#privacy-policy"], a[href="#terms-conditions"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    // Hide all legal sections first
+                    document.querySelectorAll('section[id$="policy"], section[id$="conditions"]').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show the selected section
+                    targetSection.style.display = 'block';
+                    
+                    // Scroll to the section
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
